@@ -1,33 +1,25 @@
 import {
   ForbiddenException,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
   NotImplementedException,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import {
-  FindManyOptions,
-  getRepository,
-  In,
-  Repository,
-  SelectQueryBuilder,
-} from 'typeorm';
-import { RelationMetadata } from 'typeorm/metadata/RelationMetadata';
-import { UniqueMetadata } from 'typeorm/metadata/UniqueMetadata';
-import { Exception } from '../exceptions/exception';
-import { TYPEORM_ENTITY_SERVICE_META } from './decorators/typeorm.decorators';
+} from "@nestjs/common";
+import { In, Repository, SelectQueryBuilder } from "typeorm";
+import { RelationMetadata } from "typeorm/metadata/RelationMetadata";
+import { TYPEORM_ENTITY_SERVICE_META } from "./decorators/typeorm.decorators";
 import {
   DefaultInterceptor,
   EntityRelations,
   QueryInterceptor,
   TYPEORM_SERVICE_OPTIONS,
-} from './typeorm.interfaces';
+} from "./typeorm.interfaces";
 
 export class TypeOrmService<Entity = any> {
   constructor(public readonly repository: Repository<Entity>) {}
 
   get alias(): string {
-    return 'entity';
+    return "entity";
   }
 
   qr(
@@ -57,11 +49,11 @@ export class TypeOrmService<Entity = any> {
     {
       metadata: { relations: rMeta, columns: rColumns, connection },
     }: Repository<any>,
-    alias: string,
+    alias: string
   ) {
     for (const rel in rels) {
       const { isNullable, propertyPath, type }: RelationMetadata = rMeta.find(
-        ({ propertyName }) => propertyName == rel,
+        ({ propertyName }) => propertyName == rel
       );
       const propertyAlias = `${Math.random()}`;
       const { columns, relations } = rels[rel];
@@ -74,7 +66,7 @@ export class TypeOrmService<Entity = any> {
         for (const col of columns) {
           qr.addSelect(
             `${propertyAlias}.${col as string}`,
-            `${propertyAlias}_${col as string}`,
+            `${propertyAlias}_${col as string}`
           );
         }
       } else {
@@ -91,7 +83,7 @@ export class TypeOrmService<Entity = any> {
           qr,
           relationRepository as any,
           relations as any,
-          propertyAlias,
+          propertyAlias
         );
       }
     }
@@ -100,7 +92,7 @@ export class TypeOrmService<Entity = any> {
   get meta(): TYPEORM_SERVICE_OPTIONS {
     return Reflect.getMetadata(
       TYPEORM_ENTITY_SERVICE_META,
-      (this as any).constructor,
+      (this as any).constructor
     );
   }
 
@@ -108,8 +100,29 @@ export class TypeOrmService<Entity = any> {
     return this.repository.metadata.primaryColumns[0].propertyName;
   }
 
-  async find(interceptor?: QueryInterceptor): Promise<Entity[]> {
-    return await this.qr(interceptor).getMany();
+  async find(
+    page?: number,
+    page_size?: number,
+    count?: boolean,
+    interceptor?: QueryInterceptor
+  ) {
+    const qr = this.qr(interceptor);
+    if (typeof page != "undefined") {
+      qr.take(page_size).skip(page_size * (page - 1));
+    }
+
+    const pagination = typeof page != "undefined";
+
+    const [data, ct] =
+      count && pagination ? await qr.getManyAndCount() : [await qr.getMany()];
+
+    return {
+      page: page ?? 1,
+      page_size: pagination ? Math.min(page_size, data.length) : data.length,
+      total: pagination ? ct : data.length,
+      pages: pagination ? (count ? Math.ceil(ct / page_size) : undefined) : 1,
+      data,
+    };
   }
 
   async findOne(id: any, interceptor?: QueryInterceptor) {
@@ -165,12 +178,12 @@ export class TypeOrmService<Entity = any> {
             }
 
             const missing = needle.filter(
-              (id) => !results.find((r) => r[pk] == id),
+              (id) => !results.find((r) => r[pk] == id)
             );
             throw new NotFoundException(
               `No se encontraron lo(a)s "${
                 repo.metadata.name
-              }": (${missing.join(',')})`,
+              }": (${missing.join(",")})`
             );
           } else {
             const ref = await repo.findOne({
@@ -181,13 +194,13 @@ export class TypeOrmService<Entity = any> {
             });
             if (!ref)
               throw new NotFoundException(
-                `No se ha encontrado la(el) "${repo.metadata.name}": ${needle}`,
+                `No se ha encontrado la(el) "${repo.metadata.name}": ${needle}`
               );
 
             return (record[propertyName] = ref);
           }
-        },
-      ),
+        }
+      )
     );
 
     return record;
@@ -199,7 +212,7 @@ export class TypeOrmService<Entity = any> {
       const created = await this.repository.save(record);
     } catch (e) {
       throw new InternalServerErrorException(
-        `Ha ocurrido un error guardando el ${this.repository.metadata.name}`,
+        `Ha ocurrido un error guardando el ${this.repository.metadata.name}`
       );
     }
   }
@@ -210,7 +223,7 @@ export class TypeOrmService<Entity = any> {
     });
     if (!row)
       throw new NotFoundException(
-        `No se encontro el(la) ${this.repository.metadata.name}: ${id}`,
+        `No se encontro el(la) ${this.repository.metadata.name}: ${id}`
       );
     return row;
   }
@@ -257,7 +270,7 @@ export class TypeOrmService<Entity = any> {
     const relRecord = await repository.findOne(relationId);
     if (!relRecord)
       throw new NotFoundException(
-        `No se encontro el(la) ${repository.metadata.name}: ${relationId}`,
+        `No se encontro el(la) ${repository.metadata.name}: ${relationId}`
       );
     try {
       const added = await this.qr().relation(relation).of(row).add(relRecord);
@@ -270,7 +283,7 @@ export class TypeOrmService<Entity = any> {
     const relRecord = await repository.findOne(relationId);
     if (!relRecord)
       throw new NotFoundException(
-        `No se encontro el(la) ${repository.metadata.name}: ${relationId}`,
+        `No se encontro el(la) ${repository.metadata.name}: ${relationId}`
       );
     try {
       const deleted = await this.qr()

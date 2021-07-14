@@ -5,21 +5,21 @@ import {
   NotImplementedException,
   Query,
   Req,
-} from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { TYPEORM_ENTITY_SERVICE_META } from './decorators/typeorm.decorators';
+} from "@nestjs/common";
+import { ApiBody, ApiOkResponse, ApiOperation } from "@nestjs/swagger";
+import { TYPEORM_ENTITY_SERVICE_META } from "./decorators/typeorm.decorators";
 import {
   DefaultInterceptor,
   TYPEORM_CRUD_OPTIONS,
   TYPEORM_SERVICE_OPTIONS,
-} from './typeorm.interfaces';
-import { TypeOrmService } from './typeorm.service';
-import { singular as singularize, plural as pluralize } from 'pluralize';
-import j2s from 'joi-to-swagger';
-import { array, object } from 'joi';
-import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants';
-import { getBodySchema } from './swagger.helper';
-import { JoiPipe } from './joi.pipe';
+} from "./typeorm.interfaces";
+import { TypeOrmService } from "./typeorm.service";
+import { singular as singularize, plural as pluralize } from "pluralize";
+import j2s from "joi-to-swagger";
+import { array, object } from "joi";
+import { ROUTE_ARGS_METADATA } from "@nestjs/common/constants";
+import { getBodySchema } from "./swagger.helper";
+import { JoiPipe } from "./joi.pipe";
 
 const routeHandlerMethod = (path?: string): MethodDecorator => null;
 
@@ -27,7 +27,7 @@ export interface SWAGGER_OPTIONS {
   summary?: string;
 }
 
-export const ID_PARAM = ':__id__';
+export const ID_PARAM = ":__id__";
 
 export const prepareRoute = <Service>(
   {
@@ -45,18 +45,19 @@ export const prepareRoute = <Service>(
     operation,
     withBody = false,
     extraSwagger,
+    responseWrapper,
   }: TYPEORM_CRUD_OPTIONS<Service>,
   routeHandler: typeof routeHandlerMethod,
   handler: Function,
-  path: string,
+  path: string
 ): MethodDecorator => {
   const meta: TYPEORM_SERVICE_OPTIONS<any, any> = Reflect.getMetadata(
     TYPEORM_ENTITY_SERVICE_META,
-    service,
+    service
   );
   if (!meta) {
     throw new Error(
-      `Missing "TypeOrmEntityService" metadata for class: ${service.name}`,
+      `Missing "TypeOrmEntityService" metadata for class: ${service.name}`
     );
   }
 
@@ -66,8 +67,8 @@ export const prepareRoute = <Service>(
   const sw_operation = summary
     ? ApiOperation({
         summary: summary.replace(
-          ':name',
-          (plural ? pluralize : singularize)(meta.model.name),
+          ":name",
+          (plural ? pluralize : singularize)(meta.model.name)
         ),
       })
     : null;
@@ -76,15 +77,22 @@ export const prepareRoute = <Service>(
     schema:
       isVoid || !meta.model.schema
         ? undefined
-        : j2s(plural ? array().items(meta.model.schema) : meta.model.schema)
-            .swagger,
+        : j2s(
+            responseWrapper
+              ? responseWrapper(
+                  plural ? array().items(meta.model.schema) : meta.model.schema
+                )
+              : plural
+              ? array().items(meta.model.schema)
+              : meta.model.schema
+          ).swagger,
   });
 
   const columns =
     meta.operations?.[operation]?.columns ??
     (meta.model.columns || meta.model.relations
       ? [
-          ...(meta.model.columns ?? ['*']),
+          ...(meta.model.columns ?? ["*"]),
           ...Object.keys(meta.model.relations ?? {}),
         ]
       : null);
@@ -127,7 +135,7 @@ export const prepareRoute = <Service>(
     const metadata = Reflect.getMetadata(
       ROUTE_ARGS_METADATA,
       target.constructor,
-      property,
+      property
     );
     let index = metadata ? Object.keys(metadata).length : 0;
     if (params?.length > 0) {
@@ -161,5 +169,5 @@ export const prepareRoute = <Service>(
 
 export const mergeSwagger = (
   merge: SWAGGER_OPTIONS,
-  swagger?: SWAGGER_OPTIONS,
+  swagger?: SWAGGER_OPTIONS
 ) => ({ ...merge, ...(swagger ?? {}) });

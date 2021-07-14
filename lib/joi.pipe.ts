@@ -2,30 +2,29 @@ import {
   ArgumentMetadata,
   BadRequestException,
   PipeTransform,
-} from '@nestjs/common';
-import { json } from 'express';
-import { Schema } from 'joi';
+} from "@nestjs/common";
+import { Schema } from "joi";
 
 export class JoiPipe implements PipeTransform {
   constructor(
     private schema: Schema,
     private convert: boolean = true,
-    private decode: boolean | string[] = false,
+    private decode: boolean | string[] = false
   ) {}
   transform(value: any, metadata: ArgumentMetadata) {
     try {
       if (
         value != null &&
-        typeof value == 'object' &&
+        typeof value == "object" &&
         this.decode &&
-        typeof this.decode == 'object' &&
+        typeof this.decode == "object" &&
         this.decode instanceof Array
       ) {
         for (const prop of this.decode) {
           if (
             !(prop in value) ||
             value[prop] == null ||
-            typeof value[prop] != 'string'
+            typeof value[prop] != "string"
           )
             continue;
           try {
@@ -34,21 +33,21 @@ export class JoiPipe implements PipeTransform {
         }
       }
       const { error, value: converted } = this.schema.validate(
-        typeof this.decode == 'boolean' &&
+        typeof this.decode == "boolean" &&
           this.decode &&
-          typeof value == 'string'
+          typeof value == "string"
           ? JSON.parse(value)
           : value,
         {
           convert: this.convert,
-        },
+        }
       );
 
       if (error) {
         throw new BadRequestException(
           `${metadata.type}: ${
-            metadata.data ? `"${metadata.data}"` : ''
-          } validation failed: ${error.message}`,
+            metadata.data ? `"${metadata.data}"` : ""
+          } validation failed: ${error.message}`
         );
       }
       return converted;

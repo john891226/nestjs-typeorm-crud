@@ -2,6 +2,55 @@
 # yarn lockfile v1
 
 
+"@hapi/hoek@^9.0.0":
+  version "9.2.0"
+  resolved "https://npm.geocuba.cu/@hapi%2fhoek/-/hoek-9.2.0.tgz#f3933a44e365864f4dad5db94158106d511e8131"
+  integrity sha512-sqKVVVOe5ivCaXDWivIJYVSaEgdQK9ul7a4Kity5Iw7u9+wBAPbX1RMSnLLmp7O4Vzj0WOWwMAJsTL00xwaNug==
+
+"@hapi/topo@^5.0.0":
+  version "5.1.0"
+  resolved "https://npm.geocuba.cu/@hapi%2ftopo/-/topo-5.1.0.tgz#dc448e332c6c6e37a4dc02fd84ba8d44b9afb012"
+  integrity sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
+"@nestjs/common@^6.10.0 || ^7.0.0":
+  version "7.6.18"
+  resolved "https://npm.geocuba.cu/@nestjs%2fcommon/-/common-7.6.18.tgz#d89e6d248985eec13af60507a8725cb2142d660a"
+  integrity sha512-BUJQHNhWzwWOkS4Ryndzd4HTeRObcAWV2Fh+ermyo3q3xYQQzNoEWclJVL/wZec8AONELwIJ+PSpWI53VP0leg==
+  dependencies:
+    axios "0.21.1"
+    iterare "1.2.1"
+    tslib "2.2.0"
+    uuid "8.3.2"
+
+"@nestjs/core@^8.0.2":
+  version "8.0.2"
+  resolved "https://npm.geocuba.cu/@nestjs%2fcore/-/core-8.0.2.tgz#9840ed8011a40f79097679904df4d5bccbceb3b3"
+  integrity sha512-zRXD33FR8wcbMsWuMXsAxjz74PG6JvfqlZO+FKAWZaY0kAwQuNnIfhmWYh1WIVZCy+HHbXmt/x0FbZBGG1x/1A==
+  dependencies:
+    "@nuxtjs/opencollective" "0.3.2"
+    fast-safe-stringify "2.0.8"
+    iterare "1.2.1"
+    object-hash "2.2.0"
+    path-to-regexp "3.2.0"
+    tslib "2.3.0"
+    uuid "8.3.2"
+
+"@nestjs/mapped-types@1.0.0":
+  version "1.0.0"
+  resolved "https://npm.geocuba.cu/@nestjs%2fmapped-types/-/mapped-types-1.0.0.tgz#52a0441795f6da8144a35970d3ebc19281f31cfd"
+  integrity sha512-26AW5jHadLXtvHs+M+Agd9KZ92dDlBrmD0rORlBlvn2KvsWs4JRaKl2mUsrW7YsdZeAu3Hc4ukqyYyDdyCmMWQ==
+
+"@nestjs/swagger@^5.0.1":
+  version "5.0.1"
+  resolved "https://npm.geocuba.cu/@nestjs%2fswagger/-/swagger-5.0.1.tgz#be6ed9441c6c82853b20c96b96ddf1d8e36fa0da"
+  integrity sha512-cQu+0a2OGZAUmHvBE+PocQlkBYPNi51eoow1QXnmHIQz5MeOCp88PAekWGBPaTMp9YkCEMZ7EVPNBXiq+3rAXQ==
+  dependencies:
+    "@nestjs/mapped-types" "1.0.0"
+    lodash "4.17.21"
+    path-to-regexp "3.2.0"
+
 "@nestjs/typeorm@^8.0.1":
   version "8.0.1"
   resolved "https://npm.geocuba.cu/@nestjs%2ftypeorm/-/typeorm-8.0.1.tgz#2bd4acd687058aefa70f8d1d3261f662db1ac3f0"
@@ -9,10 +58,41 @@
   dependencies:
     uuid "8.3.2"
 
+"@nuxtjs/opencollective@0.3.2":
+  version "0.3.2"
+  resolved "https://npm.geocuba.cu/@nuxtjs%2fopencollective/-/opencollective-0.3.2.tgz#620ce1044f7ac77185e825e1936115bb38e2681c"
+  integrity sha512-um0xL3fO7Mf4fDxcqx9KryrB7zgRM5JSlvGN5AGkP6JLM5XEKyjeAiPbNxdXVXQ16isuAhYpvP88NgL2BGd6aA==
+  dependencies:
+    chalk "^4.1.0"
+    consola "^2.15.0"
+    node-fetch "^2.6.1"
+
+"@sideway/address@^4.1.0":
+  version "4.1.2"
+  resolved "https://npm.geocuba.cu/@sideway%2faddress/-/address-4.1.2.tgz#811b84333a335739d3969cfc434736268170cad1"
+  integrity sha512-idTz8ibqWFrPU8kMirL0CoPH/A29XOzzAzpyN3zQ4kAWnzmNfFmRaoMNN6VI8ske5M73HZyhIaW4OuSFIdM4oA==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
+"@sideway/formula@^3.0.0":
+  version "3.0.0"
+  resolved "https://npm.geocuba.cu/@sideway%2fformula/-/formula-3.0.0.tgz#fe158aee32e6bd5de85044be615bc08478a0a13c"
+  integrity sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==
+
+"@sideway/pinpoint@^2.0.0":
+  version "2.0.0"
+  resolved "https://npm.geocuba.cu/@sideway%2fpinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
+  integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
+
 "@sqltools/formatter@^1.2.2":
   version "1.2.3"
   resolved "https://npm.geocuba.cu/@sqltools%2fformatter/-/formatter-1.2.3.tgz#1185726610acc37317ddab11c3c7f9066966bd20"
   integrity sha512-O3uyB/JbkAEMZaP3YqyHH7TMnex7tWyCbCI4EfJdOCoN6HIhqdJBWTM6aCCiWQ/5f5wxjgU735QAIpJbjDvmzg==
+
+"@types/pluralize@^0.0.29":
+  version "0.0.29"
+  resolved "https://npm.geocuba.cu/@types%2fpluralize/-/pluralize-0.0.29.tgz#6ffa33ed1fc8813c469b859681d09707eb40d03c"
+  integrity sha512-BYOID+l2Aco2nBik+iYS4SZX0Lf20KPILP5RGmM1IgzdwNdTs0eebiFriOPcej1sX9mLnSoiNte5zcFxssgpGA==
 
 "@types/zen-observable@^0.8.2":
   version "0.8.3"
@@ -55,6 +135,13 @@ argparse@^2.0.1:
   version "2.0.1"
   resolved "https://npm.geocuba.cu/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
+
+axios@0.21.1:
+  version "0.21.1"
+  resolved "https://npm.geocuba.cu/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -139,6 +226,11 @@ concat-map@0.0.1:
   resolved "https://npm.geocuba.cu/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
+consola@^2.15.0:
+  version "2.15.3"
+  resolved "https://npm.geocuba.cu/consola/-/consola-2.15.3.tgz#2e11f98d6a4be71ff72e0bdf07bd23e12cb61550"
+  integrity sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==
+
 debug@^4.3.1:
   version "4.3.2"
   resolved "https://npm.geocuba.cu/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
@@ -166,10 +258,20 @@ escape-string-regexp@^1.0.2:
   resolved "https://npm.geocuba.cu/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
+fast-safe-stringify@2.0.8:
+  version "2.0.8"
+  resolved "https://npm.geocuba.cu/fast-safe-stringify/-/fast-safe-stringify-2.0.8.tgz#dc2af48c46cf712b683e849b2bbd446b32de936f"
+  integrity sha512-lXatBjf3WPjmWD6DpIZxkeSsCOwqI0maYMpgDlx8g4U2qi4lbjA9oH/HD2a87G+KfsUmo5WbJFmqBZlPxtptag==
+
 figlet@^1.1.1:
   version "1.5.0"
   resolved "https://npm.geocuba.cu/figlet/-/figlet-1.5.0.tgz#2db4d00a584e5155a96080632db919213c3e003c"
   integrity sha512-ZQJM4aifMpz6H19AW1VqvZ7l4pOE9p7i/3LyxgO2kp+PO/VcDYNqIHEMtkccqIhTXMKci4kjueJr/iCQEaT/Ww==
+
+follow-redirects@^1.10.0:
+  version "1.14.1"
+  resolved "https://npm.geocuba.cu/follow-redirects/-/follow-redirects-1.14.1.tgz#d9114ded0a1cfdd334e164e6662ad02bfd91ff43"
+  integrity sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
 
 fs.realpath@^1.0.0:
   version "1.0.0"
@@ -233,12 +335,40 @@ is-fullwidth-code-point@^3.0.0:
   resolved "https://npm.geocuba.cu/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz#f116f8064fe90b3f7844a38997c0b75051269f1d"
   integrity sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==
 
+iterare@1.2.1:
+  version "1.2.1"
+  resolved "https://npm.geocuba.cu/iterare/-/iterare-1.2.1.tgz#139c400ff7363690e33abffa33cbba8920f00042"
+  integrity sha512-RKYVTCjAnRthyJes037NX/IiqeidgN1xc3j1RjFfECFp28A1GVwK9nA+i0rJPaHqSZwygLzRnFlzUuHFoWWy+Q==
+
+joi-to-swagger@^5.2.0:
+  version "5.2.0"
+  resolved "https://npm.geocuba.cu/joi-to-swagger/-/joi-to-swagger-5.2.0.tgz#d9c770050eed09e8d1d0d5b23b9101bcfdcd3ef6"
+  integrity sha512-G/zr+j9L7UslwuYu3HEeX/IO/0PUb1ESwhDz8VqQOLbYWiEpD6ymaCeR0Eyko4WCN5IAOJ4vXj23ZI2M/GpwNg==
+  dependencies:
+    lodash "^4.17.20"
+
+joi@^17.4.1:
+  version "17.4.1"
+  resolved "https://npm.geocuba.cu/joi/-/joi-17.4.1.tgz#15d2f23c8cbe4d1baded2dd190c58f8dbe11cca0"
+  integrity sha512-gDPOwQ5sr+BUxXuPDGrC1pSNcVR/yGGcTI0aCnjYxZEa3za60K/iCQ+OFIkEHWZGVCUcUlXlFKvMmrlmxrG6UQ==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/topo" "^5.0.0"
+    "@sideway/address" "^4.1.0"
+    "@sideway/formula" "^3.0.0"
+    "@sideway/pinpoint" "^2.0.0"
+
 js-yaml@^4.0.0:
   version "4.1.0"
   resolved "https://npm.geocuba.cu/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
   integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
   dependencies:
     argparse "^2.0.1"
+
+lodash@4.17.21, lodash@^4.17.20:
+  version "4.17.21"
+  resolved "https://npm.geocuba.cu/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 minimatch@^3.0.4:
   version "3.0.4"
@@ -266,10 +396,20 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
+node-fetch@^2.6.1:
+  version "2.6.1"
+  resolved "https://npm.geocuba.cu/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 object-assign@^4.0.1:
   version "4.1.1"
   resolved "https://npm.geocuba.cu/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
+
+object-hash@2.2.0:
+  version "2.2.0"
+  resolved "https://npm.geocuba.cu/object-hash/-/object-hash-2.2.0.tgz#5ad518581eefc443bd763472b8ff2e9c2c0d54a5"
+  integrity sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==
 
 once@^1.3.0:
   version "1.4.0"
@@ -305,6 +445,16 @@ path-is-absolute@^1.0.0:
   resolved "https://npm.geocuba.cu/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
 
+path-to-regexp@3.2.0:
+  version "3.2.0"
+  resolved "https://npm.geocuba.cu/path-to-regexp/-/path-to-regexp-3.2.0.tgz#fa7877ecbc495c601907562222453c43cc204a5f"
+  integrity sha512-jczvQbCUS7XmS7o+y1aEO9OBVFeZBQ1MDSEqmO7xSoPgOPoowY/SxLpZ6Vh97/8qHZOteiCKb7gkG9gA2ZUxJA==
+
+pluralize@^8.0.0:
+  version "8.0.0"
+  resolved "https://npm.geocuba.cu/pluralize/-/pluralize-8.0.0.tgz#1a6fa16a38d12a1901e0320fa017051c539ce3b1"
+  integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
+
 reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://npm.geocuba.cu/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
@@ -314,6 +464,13 @@ require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://npm.geocuba.cu/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
   integrity sha1-jGStX9MNqxyXbiNE/+f3kqam30I=
+
+rxjs@^6.6.6:
+  version "6.6.7"
+  resolved "https://npm.geocuba.cu/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
+  integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
+  dependencies:
+    tslib "^1.9.0"
 
 safe-buffer@^5.0.1:
   version "5.2.1"
@@ -382,12 +539,22 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
-tslib@^2.1.0:
+tslib@2.2.0:
+  version "2.2.0"
+  resolved "https://npm.geocuba.cu/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
+  integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
+
+tslib@2.3.0, tslib@^2.1.0:
   version "2.3.0"
   resolved "https://npm.geocuba.cu/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
 
-typeorm@^0.2.34:
+tslib@^1.9.0:
+  version "1.14.1"
+  resolved "https://npm.geocuba.cu/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
+  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+typeorm@^0.2.32:
   version "0.2.34"
   resolved "https://npm.geocuba.cu/typeorm/-/typeorm-0.2.34.tgz#637b3cec2de54ee7f423012b813a2022c0aacc8b"
   integrity sha512-FZAeEGGdSGq7uTH3FWRQq67JjKu0mgANsSZ04j3kvDYNgy9KwBl/6RFgMVgiSgjf7Rqd7NrhC2KxVT7I80qf7w==

@@ -1,10 +1,10 @@
-import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
-import { AnySchema, ObjectSchema } from 'joi';
-import { Entity, SelectQueryBuilder } from 'typeorm';
-import { TYPEORM_CRUD_OPERATIONS } from './operations';
-import { getBodySchema } from './swagger.helper';
-import { TypeOrmService } from './typeorm.service';
-import { SWAGGER_OPTIONS } from './typeorm.utils';
+import { EntityClassOrSchema } from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type";
+import { AnySchema, ObjectSchema } from "joi";
+import { Entity, SelectQueryBuilder } from "typeorm";
+import { TYPEORM_CRUD_OPERATIONS } from "./operations";
+import { getBodySchema } from "./swagger.helper";
+import { TypeOrmService } from "./typeorm.service";
+import { SWAGGER_OPTIONS } from "./typeorm.utils";
 
 export type EntityColumns<Entity = any> = (keyof Entity)[];
 
@@ -18,11 +18,11 @@ export type EntityRelations<Entity = any> = {
 };
 
 export const columns = <Entity>(
-  columns: EntityColumns<Entity>,
+  columns: EntityColumns<Entity>
 ): EntityColumns<Entity> => columns;
 
 export const rel = <Entity>(
-  r: EntityRelations<Entity>,
+  r: EntityRelations<Entity>
 ): EntityRelations<Entity> => r;
 
 export interface TYPEORM_MODEL_CONFIG<Entity> {
@@ -57,6 +57,7 @@ export const DefaultInterceptor = (qt) => qt;
 
 const response = (...any): MethodDecorator => null;
 
+const responseWrapper = (any) => null;
 export interface TYPEORM_CRUD_OPTIONS<Service> {
   service: any;
   name?: string;
@@ -77,4 +78,5 @@ export interface TYPEORM_CRUD_OPTIONS<Service> {
   softDelete?: boolean;
   idParam?: string;
   relationParam?: string;
+  responseWrapper?: typeof responseWrapper;
 }

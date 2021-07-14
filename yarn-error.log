@@ -1,5 +1,5 @@
 Arguments: 
-  /home/john/.nvm/versions/node/v14.16.0/bin/node /home/john/.nvm/versions/node/v14.16.0/bin/yarn add typescript
+  /home/john/.nvm/versions/node/v14.16.0/bin/node /home/john/.nvm/versions/node/v14.16.0/bin/yarn install
 
 PATH: 
   /home/john/.yarn/bin:/home/john/.yarn/bin:/home/john/.nvm/versions/node/v14.16.0/bin:/home/john/.local/bin:/home/john/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/usr/lib/jvm/default/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /media/datos/Work/typeorm-crud/package.json: Unexpected token } in JSON at position 614
+  SyntaxError: /media/datos/Work/typeorm-crud/package.json: Unexpected token / in JSON at position 670
       at JSON.parse (<anonymous>)
       at /home/john/.nvm/versions/node/v14.16.0/lib/node_modules/yarn/lib/cli.js:1625:59
       at Generator.next (<anonymous>)
@@ -39,7 +39,17 @@ npm manifest:
       "prerelease": "npm run build",
       "release": "release-it"
     },
-  
+    "devDependencies": {
+      "typescript": "^4.3.5"
+    },
+    // "peerDependencies": {
+    "dependencies": {
+      "@nestjs/common": "^6.10.0 || ^7.0.0",
+      "reflect-metadata": "^0.1.13",
+      "rxjs": "^6.6.6",
+      "@nestjs/typeorm": "^8.0.1",
+      "typeorm": "^0.2.34"
+    }
   }
 
 yarn manifest: 
