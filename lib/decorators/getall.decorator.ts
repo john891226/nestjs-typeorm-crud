@@ -10,6 +10,7 @@ import { ID_PARAM, mergeSwagger, prepareRoute } from "../typeorm.utils";
 export const GetAll = <Service extends TypeOrmService>(
   options: TYPEORM_CRUD_OPTIONS<Service>,
   path?: string,
+  paginated: boolean = false,
   defaultPageSize?: number,
   maxPageSize?: number
 ) => {
@@ -28,7 +29,10 @@ export const GetAll = <Service extends TypeOrmService>(
       },
       operation: TYPEORM_CRUD_OPERATIONS.GET_All,
       params: [
-        Query("page", new JoiPipe(number().min(1).optional())),
+        Query(
+          "page",
+          new JoiPipe(number().min(1)[paginated ? "required" : "optional"]())
+        ),
         Query(
           "page_size",
           new JoiPipe(
@@ -45,7 +49,7 @@ export const GetAll = <Service extends TypeOrmService>(
         ApiQuery({
           name: "page",
           type: "number",
-          required: false,
+          required: paginated,
         }),
         ApiQuery({
           name: "page_size",

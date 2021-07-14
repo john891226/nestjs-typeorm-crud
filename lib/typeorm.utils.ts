@@ -2,6 +2,7 @@ import {
   assignMetadata,
   Body,
   createParamDecorator,
+  Logger,
   NotImplementedException,
   Query,
   Req,
@@ -73,19 +74,24 @@ export const prepareRoute = <Service>(
       })
     : null;
 
+  let okRespSchema =
+    isVoid || (!meta.model.schema && !meta.operations?.[operation]?.columns)
+      ? null
+      : operation && meta.operations?.[operation]?.columns
+      ? getBodySchema(meta, meta.operations?.[operation]?.columns)
+      : meta.model.schema;
+
+  Logger.log(service);
+
+  if (okRespSchema) {
+    okRespSchema = plural ? array().items(okRespSchema) : okRespSchema;
+  }
+
   const sw_okresponse = response({
-    schema:
-      isVoid || !meta.model.schema
-        ? undefined
-        : j2s(
-            responseWrapper
-              ? responseWrapper(
-                  plural ? array().items(meta.model.schema) : meta.model.schema
-                )
-              : plural
-              ? array().items(meta.model.schema)
-              : meta.model.schema
-          ).swagger,
+    schema: okRespSchema
+      ? j2s(responseWrapper ? responseWrapper(okRespSchema) : okRespSchema)
+          .swagger
+      : undefined,
   });
 
   const columns =

@@ -27,7 +27,7 @@ export const rel = <Entity>(
 
 export interface TYPEORM_MODEL_CONFIG<Entity> {
   type: EntityClassOrSchema;
-  id?: string;
+  id: string;
   comment?: string;
   name: string;
   schema?: AnySchema;

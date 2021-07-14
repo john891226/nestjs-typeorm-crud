@@ -1,4 +1,4 @@
-import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
+import { EntityClassOrSchema } from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type";
 import {
   any,
   AnySchema,
@@ -9,22 +9,22 @@ import {
   ObjectSchema,
   Schema,
   string,
-} from 'joi';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
-import { EntityMetadata, getMetadataArgsStorage } from 'typeorm';
-import { ColumnMetadataArgs } from 'typeorm/metadata-args/ColumnMetadataArgs';
-import { RelationMetadataArgs } from 'typeorm/metadata-args/RelationMetadataArgs';
-import { TYPEORM_CRUD_OPERATIONS } from './operations';
+} from "joi";
+import { AnonymousSubject } from "rxjs/internal/Subject";
+import { EntityMetadata, getMetadataArgsStorage } from "typeorm";
+import { ColumnMetadataArgs } from "typeorm/metadata-args/ColumnMetadataArgs";
+import { RelationMetadataArgs } from "typeorm/metadata-args/RelationMetadataArgs";
+import { TYPEORM_CRUD_OPERATIONS } from "./operations";
 import {
   EntityColumns,
   EntityRelation,
   EntityRelations,
   TYPEORM_MODEL_CONFIG,
   TYPEORM_SERVICE_OPTIONS,
-} from './typeorm.interfaces';
+} from "./typeorm.interfaces";
 
 export const getEntitySchema = (
-  model: TYPEORM_MODEL_CONFIG<any>,
+  model: TYPEORM_MODEL_CONFIG<any>
 ): ObjectSchema => {
   return getSchemaFromEntity(model);
 };
@@ -35,7 +35,7 @@ export const entityColumn2JoiSchema = (
     options: { type, nullable, select, default: defaultValue, ...options },
   }: ColumnMetadataArgs,
   generated: boolean = false,
-  deep: boolean = true,
+  deep: boolean = true
 ): AnySchema | void => {
   if (select === false) return;
 
@@ -48,10 +48,10 @@ export const entityColumn2JoiSchema = (
       ? boolean()
       : any();
 
-  const required = typeof defaultValue != 'undefined' || nullable;
-  if (typeof defaultValue != 'undefined')
+  const required = typeof defaultValue != "undefined" || nullable;
+  if (typeof defaultValue != "undefined")
     propSchema = propSchema.default(defaultValue);
-  propSchema = propSchema[required ? 'optional' : 'required']();
+  propSchema = propSchema[required ? "optional" : "required"]();
   if (required) propSchema = propSchema.allow(null);
 
   return propSchema;
@@ -68,7 +68,7 @@ export const entityRelation2JoiSchema = (
   }: RelationMetadataArgs,
   parser: typeof entityColumn2JoiSchema = entityColumn2JoiSchema,
   { columns, relations }: EntityRelation,
-  onlyPrimary: boolean = false,
+  onlyPrimary: boolean = false
 ): any | void => {
   if (!!inverseSideProperty) return;
 
@@ -82,7 +82,7 @@ export const entityRelation2JoiSchema = (
 
   if (!sch) return;
 
-  sch = relationType == 'many-to-many' ? array().items(sch) : sch;
+  sch = relationType == "many-to-many" ? array().items(sch) : sch;
   if (nullable) {
     sch = sch.optional().allow(null);
   } else {
@@ -102,7 +102,7 @@ export const getEntityPrimarySchema = (entity) => {
 export const getSchemaFromEntity = (
   { type: entity, columns, relations: relationship }: TYPEORM_MODEL_CONFIG<any>,
   columnParser: typeof entityColumn2JoiSchema = entityColumn2JoiSchema,
-  relationsParser: typeof entityRelation2JoiSchema = entityRelation2JoiSchema,
+  relationsParser: typeof entityRelation2JoiSchema = entityRelation2JoiSchema
 ) => {
   const metadata = getMetadataArgsStorage();
   const entityMeta = metadata.filterColumns(entity as Function);
@@ -119,7 +119,7 @@ export const getSchemaFromEntity = (
 
     const generated = metadata.findGenerated(
       colMeta.target,
-      colMeta.propertyName,
+      colMeta.propertyName
     );
     const sch = columnParser(colMeta, !!generated);
     if (!sch) continue;
@@ -132,7 +132,7 @@ export const getSchemaFromEntity = (
       const sch = relationsParser(
         colMeta,
         null,
-        relationship[colMeta.propertyName],
+        relationship[colMeta.propertyName]
       );
 
       if (!sch) continue;
@@ -146,7 +146,7 @@ export const getSchemaFromEntity = (
 export const getBodySchema = (
   { model, operations, ...options }: TYPEORM_SERVICE_OPTIONS<any, any>,
   columns?: EntityColumns,
-  operation?: TYPEORM_CRUD_OPERATIONS,
+  operation?: TYPEORM_CRUD_OPERATIONS
 ) => {
   return getSchemaFromEntity(
     model,
@@ -155,13 +155,13 @@ export const getBodySchema = (
 
       if (
         operation &&
-        !!operations?.[operation].columns &&
-        operations?.[operation].columns.indexOf(def.propertyName) == -1
+        !!operations?.[operation]?.columns &&
+        operations?.[operation]?.columns.indexOf(def.propertyName) == -1
       )
         return;
       if (
         !!columns &&
-        columns.indexOf('*') == -1 &&
+        columns.indexOf("*") == -1 &&
         columns.indexOf(def.propertyName) == -1
       )
         return;
@@ -177,6 +177,6 @@ export const getBodySchema = (
         return;
       if (!!columns && columns.indexOf(def.propertyName) == -1) return;
       return entityRelation2JoiSchema(def, null, {}, true);
-    },
+    }
   );
 };
