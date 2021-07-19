@@ -113,16 +113,21 @@ export class TypeOrmService<Entity = any> {
 
     const pagination = typeof page != "undefined";
 
-    const [data, ct] =
-      count && pagination ? await qr.getManyAndCount() : [await qr.getMany()];
+    try {
+      const [data, ct] =
+        count && pagination ? await qr.getManyAndCount() : [await qr.getMany()];
 
-    return {
-      page: page ?? 1,
-      page_size: pagination ? Math.min(page_size, data.length) : data.length,
-      total: pagination ? ct : data.length,
-      pages: pagination ? (count ? Math.ceil(ct / page_size) : undefined) : 1,
-      data,
-    };
+      return {
+        page: page ?? 1,
+        page_size: pagination ? Math.min(page_size, data.length) : data.length,
+        total: pagination ? ct : data.length,
+        pages: pagination ? (count ? Math.ceil(ct / page_size) : undefined) : 1,
+        data,
+      };
+    } catch (e) {
+      Logger.error(e.message);
+      throw new InternalServerErrorException();
+    }
   }
 
   async findOne(id: any, interceptor?: QueryInterceptor) {

@@ -81,8 +81,6 @@ export const prepareRoute = <Service>(
       ? getBodySchema(meta, meta.operations?.[operation]?.columns)
       : meta.model.schema;
 
-  Logger.log(service);
-
   if (okRespSchema) {
     okRespSchema = plural ? array().items(okRespSchema) : okRespSchema;
   }
