@@ -1,6 +1,6 @@
 {
   "name": "@atlasjs/typeorm-crud",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Libreria para nestjs que facilita el crud con typeorm",
   "main": "dist/index.js",
   "repository": "http://git.geocuba.cu/atlasjs/nestjs/lib/typeorm/typeorm-crud.git",

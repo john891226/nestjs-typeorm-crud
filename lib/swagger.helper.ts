@@ -1,24 +1,21 @@
-import { EntityClassOrSchema } from "@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type";
 import {
   any,
   AnySchema,
   array,
   boolean,
+  date,
   number,
   object,
   ObjectSchema,
-  Schema,
   string,
 } from "joi";
-import { AnonymousSubject } from "rxjs/internal/Subject";
-import { EntityMetadata, getMetadataArgsStorage } from "typeorm";
+import { getMetadataArgsStorage } from "typeorm";
 import { ColumnMetadataArgs } from "typeorm/metadata-args/ColumnMetadataArgs";
 import { RelationMetadataArgs } from "typeorm/metadata-args/RelationMetadataArgs";
 import { TYPEORM_CRUD_OPERATIONS } from "./operations";
 import {
   EntityColumns,
   EntityRelation,
-  EntityRelations,
   TYPEORM_MODEL_CONFIG,
   TYPEORM_SERVICE_OPTIONS,
 } from "./typeorm.interfaces";
@@ -46,6 +43,8 @@ export const entityColumn2JoiSchema = (
       ? string()
       : type == Boolean
       ? boolean()
+      : type == Date
+      ? date()
       : any();
 
   const required = typeof defaultValue != "undefined" || nullable;

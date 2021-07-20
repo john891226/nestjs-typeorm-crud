@@ -12,7 +12,8 @@ export const GetAll = <Service extends TypeOrmService>(
   path?: string,
   paginated: boolean = false,
   defaultPageSize?: number,
-  maxPageSize?: number
+  maxPageSize?: number,
+  forceCount: boolean = false
 ) => {
   options.swagger = mergeSwagger(
     {
@@ -43,7 +44,14 @@ export const GetAll = <Service extends TypeOrmService>(
               .optional()
           )
         ),
-        Query("count", new JoiPipe(boolean().optional())),
+        Query(
+          "count",
+          new JoiPipe(
+            forceCount
+              ? boolean().optional().default(true)
+              : boolean().optional()
+          )
+        ),
       ],
       extraSwagger: [
         ApiQuery({
