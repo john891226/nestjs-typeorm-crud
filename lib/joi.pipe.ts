@@ -5,6 +5,23 @@ import {
 } from "@nestjs/common";
 import { Schema } from "joi";
 
+function decode(value: any, { type, $_terms: { keys } }: Schema) {
+  if (type != "object" && type != "array") return value;
+
+  if (typeof value == "string") return JSON.parse(value);
+  if (typeof value != "object") return value;
+
+  if (type != "object") return value;
+
+  for (const { key, schema } of keys) {
+    if (key in value) {
+      value[key] = decode(value[key], schema);
+    }
+  }
+
+  return value;
+}
+
 export class JoiPipe implements PipeTransform {
   constructor(
     private schema: Schema,
@@ -13,46 +30,27 @@ export class JoiPipe implements PipeTransform {
   ) {}
   transform(value: any, metadata: ArgumentMetadata) {
     try {
-      if (
-        value != null &&
-        typeof value == "object" &&
-        this.decode &&
-        typeof this.decode == "object" &&
-        this.decode instanceof Array
-      ) {
-        for (const prop of this.decode) {
-          if (
-            !(prop in value) ||
-            value[prop] == null ||
-            typeof value[prop] != "string"
-          )
-            continue;
-          try {
-            value[prop] = JSON.parse(value[prop]);
-          } catch (e) {}
-        }
-      }
-      const { error, value: converted } = this.schema.validate(
-        typeof this.decode == "boolean" &&
-          this.decode &&
-          typeof value == "string"
-          ? JSON.parse(value)
-          : value,
-        {
-          convert: this.convert,
-        }
-      );
-
-      if (error) {
-        throw new BadRequestException(
-          `${metadata.type}: ${
-            metadata.data ? `"${metadata.data}"` : ""
-          } validation failed: ${error.message}`
-        );
-      }
-      return converted;
+      value = decode(value, this.schema);
     } catch (e) {
-      throw e instanceof BadRequestException ? e : new BadRequestException();
+      // throw e instanceof BadRequestException ? e : new BadRequestException();
     }
+
+    const { error, value: converted } = this.schema.validate(
+      typeof this.decode == "boolean" && this.decode && typeof value == "string"
+        ? JSON.parse(value)
+        : value,
+      {
+        convert: this.convert,
+      }
+    );
+
+    if (error) {
+      throw new BadRequestException(
+        `${metadata.type}: ${
+          metadata.data ? `"${metadata.data}"` : ""
+        } validation failed: ${error.message}`
+      );
+    }
+    return converted;
   }
 }

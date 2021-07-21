@@ -170,8 +170,8 @@ export const getBodySchema = (
       if (def.inverseSideProperty) return;
       if (
         operation &&
-        !!operations?.[operation].columns &&
-        operations?.[operation].columns.indexOf(def.propertyName) == -1
+        !!operations?.[operation]?.columns &&
+        operations?.[operation]?.columns.indexOf(def.propertyName) == -1
       )
         return;
       if (!!columns && columns.indexOf(def.propertyName) == -1) return;

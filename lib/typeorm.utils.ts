@@ -103,7 +103,11 @@ export const prepareRoute = <Service>(
 
   const body = withBody
     ? operation && meta.operations?.[operation]?.schema
-      ? meta.operations?.[operation]?.schema
+      ? typeof meta.operations?.[operation]?.schema == "function"
+        ? (meta.operations?.[operation]?.schema as any)(
+            bodySchema ?? bodyFactory(meta, columns, operation)
+          )
+        : meta.operations?.[operation]?.schema
       : bodySchema ?? bodyFactory
       ? bodyFactory(meta, columns, operation)
       : null

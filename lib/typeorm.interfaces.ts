@@ -35,6 +35,10 @@ export interface TYPEORM_MODEL_CONFIG<Entity> {
   columns?: EntityColumns<Entity>;
 }
 
+const schemaFactory = (schema: ObjectSchema): ObjectSchema => null;
+
+type OPERATION_SCHEMA = ObjectSchema | typeof schemaFactory;
+
 export interface TYPEORM_SERVICE_OPTIONS<
   Service extends TypeOrmService = any,
   Entity extends any = any
@@ -42,7 +46,7 @@ export interface TYPEORM_SERVICE_OPTIONS<
   model: TYPEORM_MODEL_CONFIG<Entity>;
   operations?: {
     [key in TYPEORM_CRUD_OPERATIONS]?: {
-      schema?: ObjectSchema;
+      schema?: OPERATION_SCHEMA;
       handler?: keyof Service;
       columns?: EntityColumns<Entity>;
     };
