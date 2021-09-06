@@ -49,8 +49,9 @@ export const entityColumn2JoiSchema = (
       : any();
 
   const required = forceOptional
-    ? false
+    ? true
     : typeof defaultValue != "undefined" || nullable;
+
   if (typeof defaultValue != "undefined")
     propSchema = propSchema.default(defaultValue);
   propSchema = propSchema[required ? "optional" : "required"]();
