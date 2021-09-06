@@ -1,6 +1,6 @@
 {
   "name": "@atlasjs/typeorm-crud",
-  "version": "1.0.16",
+  "version": "1.0.19",
   "description": "Libreria para nestjs que facilita el crud con typeorm",
   "main": "dist/index.js",
   "repository": "http://git.geocuba.cu/atlasjs/nestjs/lib/typeorm/typeorm-crud.git",
@@ -25,12 +25,21 @@
     "@nestjs/swagger": "^4.8.0",
     "@nestjs/typeorm": "^7.1.5",
     "joi": "^17.4.0",
+    "joi-to-swagger": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.6",
-    "typeorm": "^0.2.31",
-    "joi-to-swagger": "^5.2.0"
+    "typeorm": "^0.2.31"
   },
   "dependencies": {
-    "pluralize": "^8.0.0"
+    "@nestjs/common": "^8.0.6",
+    "@nestjs/core": "^8.0.6",
+    "@nestjs/swagger": "^5.0.9",
+    "@nestjs/typeorm": "^8.0.2",
+    "joi": "^17.4.2",
+    "joi-to-swagger": "^6.0.1",
+    "pluralize": "^8.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.3.0",
+    "typeorm": "^0.2.37"
   }
 }

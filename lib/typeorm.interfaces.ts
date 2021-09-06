@@ -83,4 +83,5 @@ export interface TYPEORM_CRUD_OPTIONS<Service> {
   idParam?: string;
   relationParam?: string;
   responseWrapper?: typeof responseWrapper;
+  strict?: boolean;
 }

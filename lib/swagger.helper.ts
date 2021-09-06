@@ -32,7 +32,8 @@ export const entityColumn2JoiSchema = (
     options: { type, nullable, select, default: defaultValue, ...options },
   }: ColumnMetadataArgs,
   generated: boolean = false,
-  deep: boolean = true
+  deep: boolean = true,
+  forceOptional: boolean = false
 ): AnySchema | void => {
   if (select === false) return;
 
@@ -47,7 +48,9 @@ export const entityColumn2JoiSchema = (
       ? date()
       : any();
 
-  const required = typeof defaultValue != "undefined" || nullable;
+  const required = forceOptional
+    ? false
+    : typeof defaultValue != "undefined" || nullable;
   if (typeof defaultValue != "undefined")
     propSchema = propSchema.default(defaultValue);
   propSchema = propSchema[required ? "optional" : "required"]();
@@ -67,7 +70,8 @@ export const entityRelation2JoiSchema = (
   }: RelationMetadataArgs,
   parser: typeof entityColumn2JoiSchema = entityColumn2JoiSchema,
   { columns, relations }: EntityRelation,
-  onlyPrimary: boolean = false
+  onlyPrimary: boolean = false,
+  forceOptional: boolean = false
 ): any | void => {
   if (!!inverseSideProperty) return;
 
@@ -82,7 +86,7 @@ export const entityRelation2JoiSchema = (
   if (!sch) return;
 
   sch = relationType == "many-to-many" ? array().items(sch) : sch;
-  if (nullable) {
+  if (nullable || forceOptional) {
     sch = sch.optional().allow(null);
   } else {
     sch = sch.required();
@@ -145,7 +149,8 @@ export const getSchemaFromEntity = (
 export const getBodySchema = (
   { model, operations, ...options }: TYPEORM_SERVICE_OPTIONS<any, any>,
   columns?: EntityColumns,
-  operation?: TYPEORM_CRUD_OPERATIONS
+  operation?: TYPEORM_CRUD_OPERATIONS,
+  strict: boolean = true
 ) => {
   return getSchemaFromEntity(
     model,
@@ -164,7 +169,7 @@ export const getBodySchema = (
         columns.indexOf(def.propertyName) == -1
       )
         return;
-      return entityColumn2JoiSchema(def, generated);
+      return entityColumn2JoiSchema(def, generated, true, !strict);
     },
     (def: RelationMetadataArgs) => {
       if (def.inverseSideProperty) return;
@@ -175,7 +180,7 @@ export const getBodySchema = (
       )
         return;
       if (!!columns && columns.indexOf(def.propertyName) == -1) return;
-      return entityRelation2JoiSchema(def, null, {}, true);
+      return entityRelation2JoiSchema(def, null, {}, true, !strict);
     }
   );
 };

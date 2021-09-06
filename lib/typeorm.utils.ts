@@ -47,6 +47,7 @@ export const prepareRoute = <Service>(
     withBody = false,
     extraSwagger,
     responseWrapper,
+    strict = true,
   }: TYPEORM_CRUD_OPTIONS<Service>,
   routeHandler: typeof routeHandlerMethod,
   handler: Function,
@@ -109,7 +110,7 @@ export const prepareRoute = <Service>(
           )
         : meta.operations?.[operation]?.schema
       : bodySchema ?? bodyFactory
-      ? bodyFactory(meta, columns, operation)
+      ? bodyFactory(meta, columns, operation, strict)
       : null
     : null;
 

@@ -1,23 +1,23 @@
-import { Param, Put } from '@nestjs/common';
-import { ApiConflictResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import { Param, Put } from "@nestjs/common";
+import { ApiConflictResponse, ApiCreatedResponse } from "@nestjs/swagger";
 
-import { TYPEORM_CRUD_OPERATIONS } from '../operations';
-import { TYPEORM_CRUD_OPTIONS } from '../typeorm.interfaces';
-import { TypeOrmService } from '../typeorm.service';
-import { ID_PARAM, mergeSwagger, prepareRoute } from '../typeorm.utils';
+import { TYPEORM_CRUD_OPERATIONS } from "../operations";
+import { TYPEORM_CRUD_OPTIONS } from "../typeorm.interfaces";
+import { TypeOrmService } from "../typeorm.service";
+import { ID_PARAM, mergeSwagger, prepareRoute } from "../typeorm.utils";
 
 export const UpdateOne = <Service extends TypeOrmService>(
   options: TYPEORM_CRUD_OPTIONS<Service>,
-  path?: string,
+  path?: string
 ) => {
   options.swagger = mergeSwagger(
     {
       summary: `Modifica un(a) :name`,
     },
-    options.swagger,
+    options.swagger
   );
 
-  const idParam = options.idParam ?? 'id';
+  const idParam = options.idParam ?? "id";
   return prepareRoute(
     {
       ...options,
@@ -30,11 +30,12 @@ export const UpdateOne = <Service extends TypeOrmService>(
       operation: TYPEORM_CRUD_OPERATIONS.UPDATE_ONE,
       withBody: true,
       params: [Param(idParam)],
+      strict: false,
     },
     Put,
     async function (id, body) {
       return await (this as Service).replaceOne(id, body);
     },
-    path ?? `${ID_PARAM}/:${idParam}`,
+    path ?? `${ID_PARAM}/:${idParam}`
   );
 };
